@@ -455,13 +455,23 @@ function moveRandom(btn){
 noBtn.addEventListener("mouseover", ()=>moveRandom(noBtn));
 noBtn.addEventListener("touchstart", ()=>moveRandom(noBtn));
 
-// Too Late ABSOLUTELY NO button - move hover/touch
+
+// Too Late ABSOLUTELY NO button - clickable after 2 escapes
+let tooLateClicks = 0;
 const tooLateNo = document.getElementById('tooLateNo');
-tooLateNo.addEventListener("mouseover", ()=>moveRandom(tooLateNo));
-tooLateNo.addEventListener("touchstart", ()=>moveRandom(tooLateNo));
-tooLateNo.addEventListener("click", ()=>{
-  document.getElementById('tooLateSection').style.display='block';
-  document.getElementById('changeMindButtons').style.display='none';
+
+tooLateNo.addEventListener("click", (e) => {
+  tooLateClicks++;
+
+  // First 2 clicks → escape
+  if (tooLateClicks < 3) {
+    moveRandom(tooLateNo);
+  } 
+  // 3rd click → allow action
+  else {
+    document.getElementById('tooLateSection').style.display = 'block';
+    document.getElementById('changeMindButtons').style.display = 'none';
+  }
 });
 </script>
 
